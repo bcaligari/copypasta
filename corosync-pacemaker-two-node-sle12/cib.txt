@@ -16,10 +16,11 @@ primitive gamma-dummy ocf:pacemaker:Dummy
 primitive gamma-ip IPaddr2 \
 	params ip=172.16.1.64 \
 	op monitor interval=10 timeout=20
+primitive zeta-dummy ocf:pacemaker:Dummy
 group grp-beta beta-dummy beta-ip
 group grp-gamma gamma-dummy gamma-ip
 clone cl-epsilon epsilon-dummy
-location cli-ban-admin-ip-on-ha12sp5b admin-ip role=Started -inf: ha12sp5b
+location cli-ban-zeta-dummy-on-ha12sp5b zeta-dummy role=Started -inf: ha12sp5b
 colocation col-alpha -4000: alpha-dummy grp-beta
 colocation col-betagamma 4000: grp-gamma grp-beta
 property cib-bootstrap-options: \
