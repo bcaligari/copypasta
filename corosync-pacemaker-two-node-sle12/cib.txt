@@ -1,0 +1,41 @@
+node 739246396: ha12sp5a
+node 739246397: ha12sp5b
+primitive admin-ip IPaddr2 \
+	params ip=172.16.1.62 \
+	op monitor interval=10 timeout=20
+primitive admin-stonith stonith:external/sbd \
+	params pcmk_delay_max=30s \
+	meta target-role=Started
+primitive alpha-dummy ocf:pacemaker:Dummy
+primitive beta-dummy ocf:pacemaker:Dummy
+primitive beta-ip IPaddr2 \
+	params ip=172.16.1.63 \
+	op monitor interval=10 timeout=20
+primitive epsilon-dummy ocf:pacemaker:Dummy
+primitive gamma-dummy ocf:pacemaker:Dummy
+primitive gamma-ip IPaddr2 \
+	params ip=172.16.1.64 \
+	op monitor interval=10 timeout=20
+group grp-beta beta-dummy beta-ip
+group grp-gamma gamma-dummy gamma-ip
+clone cl-epsilon epsilon-dummy
+location cli-ban-admin-ip-on-ha12sp5b admin-ip role=Started -inf: ha12sp5b
+colocation col-alpha -4000: alpha-dummy grp-beta
+colocation col-betagamma 4000: grp-gamma grp-beta
+property cib-bootstrap-options: \
+	have-watchdog=true \
+	dc-version="1.1.24+20210224.476f63722-3.15.6-1.1.24+20210224.476f63722" \
+	cluster-infrastructure=corosync \
+	cluster-name=hacluster \
+	stonith-enabled=true \
+	stonith-timeout=45 \
+	stonith-action=off \
+	maintenance-mode=false \
+	last-lrm-refresh=1627564503
+rsc_defaults rsc-options: \
+	resource-stickiness=1000 \
+	migration-threshold=3
+op_defaults op-options: \
+	timeout=600 \
+	record-pending=true
+
