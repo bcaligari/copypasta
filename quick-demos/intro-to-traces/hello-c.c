@@ -2,6 +2,7 @@
 
 int main(void)
 {
-	printf("Hello, world!\n");
+	fprintf(stderr, "Hello, world!\n");
+	fprintf(stdout, "Hello, world!\n");
 	return 0;
 }

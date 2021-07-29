@@ -132,8 +132,8 @@ generated *pcap* file.
 
 Traffic can be filtered on protocol and endpoints.
 
-As Wireshark can be set up to understand a whole range of protocols streams can
-be followed at various levels of encapsulation.
+As Wireshark can be set up to understand a whole range of protocols, streams
+can be followed at various levels of encapsulation.
 
 Configured with the appropriate keys, some encrypted traffic may also be
 decoded.
